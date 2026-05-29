@@ -1,13 +1,9 @@
 services:
   - type: web
     name: altheiapulse
-    env: python
+    env: docker
     plan: free
     branch: main
-    root: ./
-    pythonVersion: "3.11"
-    buildCommand: cd frontend && npm install && npm run build && cd .. && python -m pip install --upgrade pip setuptools wheel && python -m pip install -r requirements.txt
-    startCommand: "bash ./start.sh"
     envVars:
       - key: FLASK_ENV
         value: production

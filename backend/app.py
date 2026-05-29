@@ -12,11 +12,11 @@ from database import db, init_db, User, Prediction, ActivityLog, ModelMetric
 from auth import hash_password, verify_password, generate_token, token_required, admin_required
 from ml_model import analyze_text
 
-app = Flask(
-    __name__,
-    static_folder=os.path.join(os.path.dirname(__file__), "../frontend/dist"),
-    static_url_path=""
-)
+BASE_DIR = os.path.dirname(__file__)
+FRONTEND_DIST = os.path.join(BASE_DIR, "../frontend/dist")
+FRONTEND_ASSETS = os.path.join(FRONTEND_DIST, "assets")
+
+app = Flask(__name__, static_folder=None)
 # Enable CORS for all routes (important for React frontend integration)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -67,17 +67,24 @@ def health_check():
         "timestamp": datetime.utcnow().isoformat()
     })
 
+@app.route("/assets/<path:filename>", methods=["GET"])
+def serve_frontend_asset(filename):
+    return send_from_directory(FRONTEND_ASSETS, filename)
+
+@app.route("/favicon.svg", methods=["GET"])
+def serve_favicon():
+    return send_from_directory(FRONTEND_DIST, "favicon.svg")
+
 @app.route("/", methods=["GET"])
 def serve_frontend_index():
-    return send_from_directory(app.static_folder, "index.html")
+    return send_from_directory(FRONTEND_DIST, "index.html")
 
 @app.route("/<path:path>", methods=["GET"])
 def serve_frontend(path):
     """Serve frontend files for SPA routing"""
-    try:
-        return send_from_directory(app.static_folder, path)
-    except Exception:
-        return send_from_directory(app.static_folder, "index.html")
+    if os.path.exists(os.path.join(FRONTEND_DIST, path)):
+        return send_from_directory(FRONTEND_DIST, path)
+    return send_from_directory(FRONTEND_DIST, "index.html")
 
 @app.route("/api/register", methods=["POST"])
 def register():

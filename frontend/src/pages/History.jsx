@@ -152,7 +152,7 @@ TF-IDF & Logistic Regression NLP evaluation engine.
             <select
               value={filterPred}
               onChange={(e) => setFilterPred(e.target.value)}
-              className="w-full glass-input rounded-xl pl-10 pr-4 py-2.5 text-sm appearance-none cursor-pointer font-sans"
+              className="w-full glass-input rounded-xl pl-10 pr-4 py-2.5 text-sm no-appearance cursor-pointer font-sans"
             >
               <option value="">All Classification Verdicts</option>
               <option value="Real">Real Only</option>

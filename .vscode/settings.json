@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/frontend/dist": true
+  },
+  "search.exclude": {
+    "**/frontend/dist": true
+  },
+  "files.watcherExclude": {
+    "**/frontend/dist/**": true
+  }
+}

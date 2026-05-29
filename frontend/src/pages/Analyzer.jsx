@@ -130,7 +130,7 @@ export default function Analyzer({ setActivePage }) {
                 <button
                   key={idx}
                   onClick={() => setText(st)}
-                  className="p-2.5 text-left rounded-lg bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-white/5 text-xs text-slate-700 dark:text-slate-300 font-mono line-clamp-1 italic transition-colors"
+                  className="p-2.5 text-left rounded-lg bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-white/5 text-xs text-slate-700 dark:text-slate-300 font-mono text-clamp-1 italic transition-colors"
                 >
                   "{st}"
                 </button>

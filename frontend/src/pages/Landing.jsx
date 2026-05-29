@@ -301,7 +301,7 @@ export default function Landing({ setActivePage }) {
                 className="p-4 text-left rounded-xl border border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800/80 hover:border-[#00F0FF]/30 text-xs transition-all text-slate-700 dark:text-slate-300 flex flex-col justify-between gap-3 group relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-2 h-2 bg-[#00F0FF] opacity-0 group-hover:opacity-100 transition-opacity" />
-                <span className="line-clamp-2 italic text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">"{ex.text}"</span>
+                <span className="text-clamp-2 italic text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">"{ex.text}"</span>
                 <span className={`text-xs uppercase font-black self-end px-3 py-1 rounded-full ${
                   ex.label === 'Real' ? 'text-emerald-500 dark:text-emerald-400 bg-emerald-500/10' :
                   ex.label === 'Fake' ? 'text-red-500 dark:text-red-400 bg-red-500/10' : 'text-amber-500 dark:text-amber-400 bg-amber-500/10'

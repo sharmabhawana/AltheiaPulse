@@ -295,5 +295,5 @@ def admin_reports(current_user):
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
-    # In production, debug should be False
-    app.run(host="0.0.0.0", port=port, debug=True)
+    debug = os.getenv("FLASK_ENV", "production") != "production"
+    app.run(host="0.0.0.0", port=port, debug=debug)

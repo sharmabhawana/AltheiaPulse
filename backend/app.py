@@ -59,7 +59,7 @@ with app.app_context():
         print(f"Failed to seed default accounts: {e}")
         db.session.rollback()
 
-@app.route("/", methods=["GET"])
+@app.route("/api/health", methods=["GET"])
 def health_check():
     return jsonify({
         "status": "healthy",
@@ -67,12 +67,16 @@ def health_check():
         "timestamp": datetime.utcnow().isoformat()
     })
 
+@app.route("/", methods=["GET"])
+def serve_frontend_index():
+    return send_from_directory(app.static_folder, "index.html")
+
 @app.route("/<path:path>", methods=["GET"])
 def serve_frontend(path):
     """Serve frontend files for SPA routing"""
     try:
         return send_from_directory(app.static_folder, path)
-    except:
+    except Exception:
         return send_from_directory(app.static_folder, "index.html")
 
 @app.route("/api/register", methods=["POST"])

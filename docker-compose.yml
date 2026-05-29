@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: altheiapulse_db
+    restart: always
+    environment:
+      POSTGRES_DB: altheiapulse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: altheiapulse_backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/altheiapulse
+      - JWT_SECRET=altheiapulse-super-secret-key-change-in-production
+      - PORT=5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: altheiapulse_frontend
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://backend:5000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

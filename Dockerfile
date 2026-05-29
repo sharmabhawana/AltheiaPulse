@@ -32,5 +32,5 @@ EXPOSE 5000
 ENV PORT=5000
 ENV FLASK_ENV=production
 
-# Start application using Gunicorn
-CMD ["gunicorn", "backend.app:app", "--bind", "0.0.0.0:5000"]
+# Start application using Gunicorn binding to the dynamic PORT environment variable
+CMD gunicorn backend.app:app --bind 0.0.0.0:$PORT

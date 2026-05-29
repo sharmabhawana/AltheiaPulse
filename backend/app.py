@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.insert(0, os.path.dirname(__file__))
 import json
 from datetime import datetime, timedelta
 from flask import Flask, request, jsonify, send_from_directory

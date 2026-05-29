@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import datetime, timedelta
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
 
@@ -12,7 +12,11 @@ from database import db, init_db, User, Prediction, ActivityLog, ModelMetric
 from auth import hash_password, verify_password, generate_token, token_required, admin_required
 from ml_model import analyze_text
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder=os.path.join(os.path.dirname(__file__), "../frontend/dist"),
+    static_url_path=""
+)
 # Enable CORS for all routes (important for React frontend integration)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -62,6 +66,14 @@ def health_check():
         "service": "AltheiaPulse REST API",
         "timestamp": datetime.utcnow().isoformat()
     })
+
+@app.route("/<path:path>", methods=["GET"])
+def serve_frontend(path):
+    """Serve frontend files for SPA routing"""
+    try:
+        return send_from_directory(app.static_folder, path)
+    except:
+        return send_from_directory(app.static_folder, "index.html")
 
 @app.route("/api/register", methods=["POST"])
 def register():
